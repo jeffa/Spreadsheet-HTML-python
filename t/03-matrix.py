@@ -43,6 +43,14 @@ class TestMatrix(unittest.TestCase):
             "via constructor and method"
         )
 
+        html = '<table><tr><th>1</th><th>a</th></tr><tr><td>2</td><td>b</td></tr></table>'
+
+        self.assertEqual(
+            html,
+            Table( { 'matrix': 1 } ).generate( { 'data': data, 'matrix': 0 } ),
+            "override constructor arg in method"
+        )
+
 
 if __name__ == '__main__':
     unittest.main()
