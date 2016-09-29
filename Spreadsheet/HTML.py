@@ -69,10 +69,13 @@ class Table:
             params['_max_rows'] = len( data )
             params['_max_cols'] = len( data[0] )
 
-        params['auto'] = Tag({
-            #'indent': params.get( 'indent', '' ),
+        tag_params = {
             'level': params.get( 'level', 0 ),
-            'sort': params.get( 'attr_sort', 0 )
-        })
+            'sort': params.get( 'attr_sort', 0 ),
+        }
+        if 'indent' in params:
+            tag_params['indent'] = params['indent']
+
+        params['auto'] = Tag( tag_params )
 
         return params
