@@ -3,7 +3,7 @@ from Spreadsheet.HTML import Table
 
 class TestMatrix(unittest.TestCase):
 
-    def test_matrix_with_instance(self):
+    def test_matrix(self):
         data = [[1,'a'], [2,'b']]
         html = '<table><tr><td>1</td><td>a</td></tr><tr><td>2</td><td>b</td></tr></table>'
 
