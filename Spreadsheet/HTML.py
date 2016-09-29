@@ -4,25 +4,27 @@ __version__='0.0.1'
 
 class Table:
 
-    def generate( self, *args ):
-        params = self._process( *args )
-
-        return self._make_table( params )
-
     def __init__( self, *args ):
         self.params = self._process( *args )
 
-    def _make_table( self, params ):
+    def generate( self, *args ):
+        self.params.update( self._process( *args ) )
+
+        return self._make_table()
+
+    def _make_table( self ):
         cdata = []
-        return params['auto'].tag({ 'tag': 'table' })
+
+        return self.params['auto'].tag({ 'tag': 'table' })
 
     def _process( self, *args ):
-        params = self._args( *args )
+        params = self._params( *args )
+
         return params
 
-    def _args( self, *thingy ):
-        data = []
-        args = {}
+    def _params( self, *thingy ):
+        data   = []
+        params = {}
 
         things = list( thingy )
         while things:
@@ -33,19 +35,23 @@ class Table:
                 else:
                     data.append( thing )
             elif type(thing) is dict:
-                data = thing.pop( 'data', None )
-                args = thing
+                data   = thing.pop( 'data', None )
+                params = thing
             else:
                 if thing is 'data':
                     data = things.pop(0)
                 else:
-                    args[thing] = things.pop(0)
+                    params[thing] = things.pop(0)
 
-        args['auto'] = Tag({
-            'indent': args.get( 'indent', '' ),
-            'level': args.get( 'level', 0 ),
-            'sort': args.get( 'attr_sort', 0 )
+        if len(data):
+            params['data']      = list( data )
+            params['_max_rows'] = len( data )
+            params['_max_cols'] = len( data[0] )
+
+        params['auto'] = Tag({
+            'indent': params.get( 'indent', '' ),
+            'level': params.get( 'level', 0 ),
+            'sort': params.get( 'attr_sort', 0 )
         })
 
-        self.data = data
-        return args
+        return params
