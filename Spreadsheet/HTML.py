@@ -1,8 +1,6 @@
-import re
-from cgi import escape
 from HTML.Auto import Tag
 
-__version__='0.0.2'
+__version__='0.0.1'
 
 class Table:
 
@@ -10,6 +8,9 @@ class Table:
         params = self._process( *args )
 
         return self._make_table( params )
+
+    def __init__( self, *args ):
+        self.params = self._process( *args )
 
     def _make_table( self, params ):
         cdata = []
