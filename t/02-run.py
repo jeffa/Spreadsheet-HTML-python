@@ -33,28 +33,6 @@ class TestTable(unittest.TestCase):
             "multiple arg"
         )
 
-    def test_class(self):
-        data = [[1,'a'], [2,'b']]
-        html = '<table><tr><th>1</th><th>a</th></tr><tr><td>2</td><td>b</td></tr></table>'
-
-        self.assertEqual(
-            html,
-            Table( [1,'a'], [2,'b'] ).generate(),
-            "two array refs"
-        )
-
-        self.assertEqual(
-            html,
-            Table( data ).generate(),
-            "one array ref"
-        )
-
-        self.assertEqual(
-            html,
-            Table({ 'data': data }).generate(),
-            "one named arg"
-        )
-
 
 if __name__ == '__main__':
     unittest.main()
