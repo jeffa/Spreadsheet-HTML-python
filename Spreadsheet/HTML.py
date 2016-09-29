@@ -27,7 +27,7 @@ class Table:
     def _process( self, params ):
 
         empty = params['empty'] if 'empty' in params else '&nbsp;'
-        tag   = 'td' if params.get( 'matrix' ) else 'th'
+        tag   = 'td' if params.get( 'matrix' ) or params.get( 'headless' ) else 'th'
 
         if '_max_rows' in params:
             for r in range( params['_max_rows'] ):
@@ -40,6 +40,9 @@ class Table:
 
                 params['data'][r] = row
                 tag = 'td'
+
+        if 'headless' in params:
+            params['data'].pop(0)
 
         return params
 
