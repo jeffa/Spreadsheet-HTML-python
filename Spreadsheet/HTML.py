@@ -26,7 +26,7 @@ class Table:
         params = self._params( *args )
 
         empty = params['empty'] if 'empty' in params else '&nbsp;'
-        tag   = 'th'
+        tag   = 'td' if params.get( 'matrix' ) else 'th'
 
         if '_max_rows' in params:
             for r in range( params['_max_rows'] ):
