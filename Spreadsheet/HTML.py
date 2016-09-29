@@ -8,7 +8,13 @@ class Table:
         self.params = self._params( *args )
 
     def generate( self, *args ):
-        self.params.update( self._params( *args ) )
+
+        if 'indent' in self.params:
+            params = self._params( *args, 'indent', self.params['indent'] )
+        else:
+            params = self._params( *args )
+
+        self.params.update( params )
 
         return self._make_table()
 
