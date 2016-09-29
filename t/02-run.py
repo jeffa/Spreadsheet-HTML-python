@@ -5,8 +5,7 @@ class TestTable(unittest.TestCase):
 
     def test_instance(self):
         data = [[1,'a'], [2,'b']]
-        html = '<table />'
-        #html = '<table><tr><th>1</th><th>a</th></tr><tr><td>2</td><td>b</td></tr></table>'
+        html = '<table><tr><th>1</th><th>a</th></tr><tr><td>2</td><td>b</td></tr></table>'
 
         gen  = Table()
 
@@ -36,7 +35,7 @@ class TestTable(unittest.TestCase):
 
     def test_class(self):
         data = [[1,'a'], [2,'b']]
-        html = '<table />'
+        html = '<table><tr><th>1</th><th>a</th></tr><tr><td>2</td><td>b</td></tr></table>'
 
         self.assertEqual(
             html,

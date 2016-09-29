@@ -13,12 +13,32 @@ class Table:
         return self._make_table()
 
     def _make_table( self ):
-        cdata = []
+        cdata   = []
+        tr_attr = self.params['tr'] if 'tr' in self.params else {}
+        tb_attr = self.params['table'] if 'table' in self.params else {}
 
-        return self.params['auto'].tag({ 'tag': 'table' })
+        for c in self.params['data']:
+            cdata.append( { 'tag': 'tr', 'attr': tr_attr, 'cdata': c } )
+
+        return self.params['auto'].tag({ 'tag': 'table', 'attr': tb_attr, 'cdata': cdata })
 
     def _process( self, *args ):
         params = self._params( *args )
+
+        empty = params['empty'] if 'empty' in params else '&nbsp;'
+        tag   = 'th'
+
+        if '_max_rows' in params:
+            for r in range( params['_max_rows'] ):
+
+                row = []
+                for c in range( params['_max_cols'] ):
+                    attr  = params['tag'] if 'tag' in params else {}
+                    cdata = params['data'][r][c]
+                    row.append( { 'tag': tag, 'attr': attr, 'cdata': cdata } )
+
+                params['data'][r] = row
+                tag = 'td'
 
         return params
 
@@ -49,7 +69,7 @@ class Table:
             params['_max_cols'] = len( data[0] )
 
         params['auto'] = Tag({
-            'indent': params.get( 'indent', '' ),
+            #'indent': params.get( 'indent', '' ),
             'level': params.get( 'level', 0 ),
             'sort': params.get( 'attr_sort', 0 )
         })
