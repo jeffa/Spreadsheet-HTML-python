@@ -10,6 +10,7 @@ setup(
     url='https://github.com/jeffa/Spreadsheet-HTML-python',
     license='Artistic',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    install_requires=['HTML-Auto'],
     classifiers=[
         "Topic :: Text Processing :: Markup :: HTML",
         "Development Status :: 1 - Planning",
