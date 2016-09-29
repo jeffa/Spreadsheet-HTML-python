@@ -5,14 +5,16 @@ __version__='0.0.1'
 class Table:
 
     def __init__( self, *args ):
-        self.params = self._process( *args )
+        self.params = self._params( *args )
 
     def generate( self, *args ):
-        self.params.update( self._process( *args ) )
+        self.params.update( self._params( *args ) )
 
         return self._make_table()
 
     def _make_table( self ):
+        self.params = self._process( self.params )
+
         cdata   = []
         tr_attr = self.params['tr'] if 'tr' in self.params else {}
         tb_attr = self.params['table'] if 'table' in self.params else {}
@@ -22,8 +24,7 @@ class Table:
 
         return self.params['auto'].tag({ 'tag': 'table', 'attr': tb_attr, 'cdata': cdata })
 
-    def _process( self, *args ):
-        params = self._params( *args )
+    def _process( self, params ):
 
         empty = params['empty'] if 'empty' in params else '&nbsp;'
         tag   = 'td' if params.get( 'matrix' ) else 'th'
@@ -63,7 +64,7 @@ class Table:
                 else:
                     params[thing] = things.pop(0)
 
-        if len(data):
+        if data:
             params['data']      = list( data )
             params['_max_rows'] = len( data )
             params['_max_cols'] = len( data[0] )

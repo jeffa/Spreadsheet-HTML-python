@@ -31,17 +31,17 @@ class TestMatrix(unittest.TestCase):
             "list via constructor only"
         )
 
-#        self.assertEqual(
-#            html,
-#            Table( { 'data': data } ).generate( { 'matrix': 1 } ),
-#            "via constructor and method"
-#        )
-#
-#        self.assertEqual(
-#            html,
-#            Table( { 'matrix': 1 } ).generate( { 'data': data } ),
-#            "via constructor and method"
-#        )
+        self.assertEqual(
+            html,
+            Table( { 'data': data } ).generate( { 'matrix': 1 } ),
+            "via constructor and method"
+        )
+
+        self.assertEqual(
+            html,
+            Table( { 'matrix': 1 } ).generate( { 'data': data } ),
+            "via constructor and method"
+        )
 
 
 if __name__ == '__main__':
