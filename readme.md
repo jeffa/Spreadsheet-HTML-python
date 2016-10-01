@@ -11,10 +11,9 @@ Synopsis
 ```python
 from Spreadsheet.HTML import Table
 
-data = [ [1,2,3], [4,5,6], [7,8,9] ]
-generator = Table()
-puts generator.generate( data )
-puts generator.generate( { 'data': data } )
+data = [ [1,2,3], [10,11,12], ['<foo>','<bar>','<baz>'] ]
+puts Table().generate( data )
+puts Table().generate( { 'data': data } )
 
 generator = Table( { 'data': data, 'indent': "\t" } )
 puts generator.portrait( { 'encodes': 1 } )
@@ -24,6 +23,8 @@ puts generator.generate( { 'tgroups': 1 } )
 puts generator.generate( { 'tgroups': 2, 'indent': None } )
 
 puts generator.generate( { 'tr': { 'class': [ 'odd', 'even' ] } )
+
+# and much, much more ...
 ```
 
 Installation
