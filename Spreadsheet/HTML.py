@@ -1,3 +1,4 @@
+import re
 from HTML.Auto import Tag
 
 __version__='0.0.1'
@@ -5,32 +6,25 @@ __version__='0.0.1'
 class Table:
 
     def __init__( self, *args ):
-        self.params = self._params( *args )
+        self.params = args
 
     def generate( self, *args ):
+        params = self._process( *args )
 
-        if 'indent' in self.params:
-            params = self._params( *args, 'indent', self.params['indent'] )
-        else:
-            params = self._params( *args )
+        return self._make_table( params )
 
-        self.params.update( params )
-
-        return self._make_table()
-
-    def _make_table( self ):
-        self.params = self._process( self.params )
-
+    def _make_table( self, params ):
         cdata   = []
-        tr_attr = self.params['tr'] if 'tr' in self.params else {}
-        tb_attr = self.params['table'] if 'table' in self.params else {}
+        tr_attr = params['tr'] if 'tr' in params else {}
+        tb_attr = params['table'] if 'table' in params else {}
 
-        for c in self.params['data']:
+        for c in params['data']:
             cdata.append( { 'tag': 'tr', 'attr': tr_attr, 'cdata': c } )
 
-        return self.params['auto'].tag({ 'tag': 'table', 'attr': tb_attr, 'cdata': cdata })
+        return params['auto'].tag( { 'tag': 'table', 'attr': tb_attr, 'cdata': cdata } )
 
-    def _process( self, params ):
+    def _process( self, *args ):
+        params = self._args( *args )
 
         empty = params['empty'] if 'empty' in params else '&nbsp;'
         tag   = 'td' if params.get( 'matrix' ) or params.get( 'headless' ) else 'th'
@@ -41,7 +35,13 @@ class Table:
                 row = []
                 for c in range( params['_max_cols'] ):
                     attr  = params['tag'] if 'tag' in params else {}
-                    cdata = params['data'][r][c]
+                    cdata = str( params['data'][r][c] )
+
+                    # attr extrapolation here
+                    # encoding here
+                    regex = re.compile(r"^\s*$")
+                    if regex.match( cdata ):
+                        cdata = empty
                     row.append( { 'tag': tag, 'attr': attr, 'cdata': cdata } )
 
                 params['data'][r] = row
@@ -52,11 +52,11 @@ class Table:
 
         return params
 
-    def _params( self, *thingy ):
-        data   = []
+    def _args( self, *thingy ):
+        data = []
         params = {}
 
-        things = list( thingy )
+        things = list( self.params ) + list( thingy )
         while things:
             thing = things.pop(0)
             if type( thing ) is list:
@@ -65,26 +65,25 @@ class Table:
                 else:
                     data.append( thing )
             elif type(thing) is dict:
-                data   = thing.pop( 'data', None )
-                params = thing
+                data = thing.pop( 'data', data )
+                for k in thing:
+                    params[k] = thing[k]
             else:
                 if thing is 'data':
                     data = things.pop(0)
                 else:
                     params[thing] = things.pop(0)
 
-        if data:
-            params['data']      = list( data )
-            params['_max_rows'] = len( data )
-            params['_max_cols'] = len( data[0] )
+        params['data'] = list( data )
+        params['_max_rows'] = len( params['data'] )
+        params['_max_cols'] = len( params['data'][0] )
 
         tag_params = {
             'level': params.get( 'level', 0 ),
-            'sort': params.get( 'attr_sort', 0 ),
+            'sort': params.get( 'attr_sort', 0 )
         }
         if 'indent' in params:
             tag_params['indent'] = params['indent']
-
         params['auto'] = Tag( tag_params )
 
         return params
