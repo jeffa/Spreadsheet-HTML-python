@@ -21,8 +21,32 @@ class Table:
         if 'caption' in params:
             cdata.append( self._tag( 'caption', params['caption'] ) )
 
-        for c in params['data']:
-            cdata.append( { 'tag': 'tr', 'attr': tr_attr, 'cdata': c } )
+        if 'tgroups' in params and params['tgroups'] > 0:
+            body = params['data']
+            matrix = params.get( 'matrix', 0 )
+            head = body.pop(0) if not matrix and len( body ) > 2 else None
+            foot = body.pop()  if not matrix and params['tgroups'] > 1 and len( body ) > 2 else None
+
+            body_rows = []
+            for r in body:
+                body_rows.append( { 'tag': 'tr', 'attr': tr_attr, 'cdata': r } )
+            if head:
+                thead_tr_attr = params['thead.tr'] if 'thead.tr' in params else {}
+                thead_attr    = params['thead'] if 'thead' in params else {}
+                head_row = { 'tag': 'tr', 'attr': thead_tr_attr, 'cdata': head }
+                cdata.append( { 'tag': 'thead', 'attr': thead_attr, 'cdata': head_row } )
+            if foot:
+                tfoot_tr_attr = params['tfoot.tr'] if 'tfoot.tr' in params else {}
+                tfoot_attr    = params['tfoot'] if 'tfoot' in params else {}
+                foot_row = { 'tag': 'tr', 'attr': tfoot_tr_attr, 'cdata': foot }
+                cdata.append( { 'tag': 'tfoot', 'attr': tfoot_attr, 'cdata': foot_row } )
+
+            tbody_attr = params['tbody'] if 'tbody' in params else {}
+            cdata.append( { 'tag': 'tbody', 'attr': tbody_attr, 'cdata': body_rows } )
+
+        else:
+            for c in params['data']:
+                cdata.append( { 'tag': 'tr', 'attr': tr_attr, 'cdata': c } )
 
         return params['auto'].tag( { 'tag': 'table', 'attr': tb_attr, 'cdata': cdata } )
 
