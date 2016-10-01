@@ -1,7 +1,7 @@
 import unittest
 from Spreadsheet.HTML import Table
 
-class TestHeadless(unittest.TestCase):
+class TestTheta(unittest.TestCase):
 
     def test_0flip(self):
 
