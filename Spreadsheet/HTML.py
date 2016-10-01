@@ -11,6 +11,49 @@ class Table:
     def generate( self, *args ):
         params = self._process( *args )
 
+        if 'theta' in params and 'flip' in params and int( params['flip'] ):
+            params['theta'] = -1 * int( params['theta'] )
+
+        if not 'theta' in params:     # north
+            if 'flip' in params:
+                params['data'] = list( map( lambda r: r[::-1], params['data'] ) )
+
+        elif params['theta'] == 90:   # east
+            params['data'] = list( map( lambda r: list(r), zip( *params['data'] ) ) )
+            if 'pinhead' in params and not 'headless' in params:
+                for r in params['data']:
+                    r.append( r.pop(0) )
+            else:
+                params['data'] = list( map( lambda r: r[::-1], params['data'] ) )
+
+        elif params['theta'] == -90:
+            params['data'] = list( map( lambda r: list(r), zip( *params['data'] ) ) )
+            params['data'] = list( reversed( params['data'] ) )
+            if 'pinhead' in params and not 'headless' in params:
+                for r in params['data']:
+                    r.append( r.pop(0) )
+            else:
+                params['data'] = list( map( lambda r: r[::-1], params['data'] ) )
+
+        elif params['theta'] == 180:
+            if 'pinhead' in params and not 'headless' in params:
+                params['data'].append( params['data'].pop(0) )
+                params['data'] = list( map( lambda r: r[::-1], params['data'] ) )
+            else:
+                params['data'] = list( map( lambda r: r[::-1], reversed( params['data'] ) ) )
+
+        elif params['theta'] == -180: # south
+            if 'pinhead' in params and not 'headless' in params:
+                params['data'].append( params['data'].pop(0) )
+            else:
+                params['data'] = list( reversed( params['data'] ) )
+
+        elif params['theta'] == 270:
+            params['data'] = reversed( list( map( lambda r: list(r), zip( *params['data'] ) ) ) )
+
+        elif params['theta'] == -270: # west
+            params['data'] = list( map( lambda r: list(r), zip( *params['data'] ) ) )
+
         return self._make_table( params )
 
     def _make_table( self, params ):
