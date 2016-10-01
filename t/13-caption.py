@@ -27,11 +27,11 @@ class TestCaption(unittest.TestCase):
             "caption present from generate()"
         )
 
-#        self.assertEqual(
-#            '<table><caption key="value">My Table</caption><thead><tr><th>a</th><th>b</th><th>c</th></tr></thead><tfoot><tr><td>4</td><td>5</td><td>6</td></tr></tfoot><tbody><tr><td>1</td><td>2</td><td>3</td></tr></tbody></table>',
-#            gen.generate( { 'tgroups': 2 } ),
-#            "caption present from generate() with tgroups"
-#        )
+        self.assertEqual(
+            '<table><caption key="value">My Table</caption><thead><tr><th>a</th><th>b</th><th>c</th></tr></thead><tfoot><tr><td>4</td><td>5</td><td>6</td></tr></tfoot><tbody><tr><td>1</td><td>2</td><td>3</td></tr></tbody></table>',
+            gen.generate( { 'tgroups': 2 } ),
+            "caption present from generate() with tgroups"
+        )
 
         self.assertEqual(
             '<table><caption>0</caption><tr><th>a</th><th>b</th><th>c</th></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>4</td><td>5</td><td>6</td></tr></table>',

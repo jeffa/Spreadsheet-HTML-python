@@ -22,10 +22,10 @@ class Table:
             cdata.append( self._tag( 'caption', params['caption'] ) )
 
         if 'tgroups' in params and params['tgroups'] > 0:
-            body = params['data']
+            body = list( params['data'] )
             matrix = params.get( 'matrix', 0 )
-            head = body.pop(0) if not matrix and len( body ) > 2 else None
-            foot = body.pop()  if not matrix and params['tgroups'] > 1 and len( body ) > 2 else None
+            head = body.pop(0) if not matrix and len( params['data'] ) > 2 else None
+            foot = body.pop()  if not matrix and params['tgroups'] > 1 and len( params['data'] ) > 2 else None
 
             body_rows = []
             for r in body:
