@@ -8,6 +8,14 @@ class Table:
     def __init__( self, *args ):
         self.params = args
 
+    def portrait( self, *args ): return self.generate( *args, { 'theta': 0 } )
+    def landscape( self, *args ): return self.generate( *args, { 'theta': -270, 'tgroups': 0 } )
+
+    def north( self, *args ): return self.generate( *args, { 'theta': 0 } )
+    def west( self, *args ): return self.generate( *args, { 'theta': -270, 'tgroups': 0 } )
+    def east( self, *args ): return self.generate( *args, { 'theta':   90, 'tgroups': 0, 'pinhead': 1 } )
+    def south( self, *args ): return self.generate( *args, { 'theta': -180, 'tgroups': 0, 'pinhead': 1 } )
+
     def generate( self, *args ):
         params = self._process( *args )
 
