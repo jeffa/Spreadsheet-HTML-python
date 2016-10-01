@@ -18,6 +18,9 @@ class Table:
         tr_attr = params['tr'] if 'tr' in params else {}
         tb_attr = params['table'] if 'table' in params else {}
 
+        if 'caption' in params:
+            cdata.append( self._tag( 'caption', params['caption'] ) )
+
         for c in params['data']:
             cdata.append( { 'tag': 'tr', 'attr': tr_attr, 'cdata': c } )
 
@@ -86,3 +89,11 @@ class Table:
         params['auto'] = Tag( tag_params )
 
         return params
+
+    def _tag( self, tag, cdata ):
+        tag = { 'tag': tag, 'cdata': cdata }
+        if type( cdata ) is dict:
+            keys = list( cdata.keys() )
+            tag['cdata'] = keys[0]
+            tag['attr']  = cdata[ keys[0] ]
+        return tag
