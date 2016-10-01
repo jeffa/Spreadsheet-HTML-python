@@ -65,9 +65,8 @@ class Table:
                 else:
                     data.append( thing )
             elif type(thing) is dict:
-                data = thing.pop( 'data', data )
-                for k in thing:
-                    params[k] = thing[k]
+                data = thing['data'] if 'data' in thing else data
+                params.update( thing )
             else:
                 if thing is 'data':
                     data = things.pop(0)
