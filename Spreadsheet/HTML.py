@@ -111,14 +111,18 @@ class Table:
 
                 row = []
                 for c in range( params['_max_cols'] ):
-                    attr  = params['tag'] if 'tag' in params else {}
+                    attr  = params[tag] if tag in params else {}
                     cdata = str( params['data'][r][c] )
 
-                    # attr extrapolation here
+                    for dyna_param in [ tag, '-c{}'.format(c), '-r{}'.format(r), '-rc{}{}'.format(r,c) ]:
+                        if dyna_param in params:
+                            ( cdata, attr ) = self._extrapolate( cdata, attr, params[dyna_param] )
+
                     # encoding here
                     regex = re.compile(r"^\s*$")
                     if regex.match( cdata ):
                         cdata = empty
+
                     row.append( { 'tag': tag, 'attr': attr, 'cdata': cdata } )
 
                 params['data'][r] = row
@@ -171,3 +175,23 @@ class Table:
             tag['cdata'] = keys[0]
             tag['attr']  = cdata[ keys[0] ]
         return tag
+
+    def _extrapolate( self, cdata, orig_attr, thingy ):
+        attr     = {}
+        new_attr = {}
+        thingy   = [ thingy ] if not type( thingy ) is list else thingy
+
+        for t in thingy:
+            if type( t ) is dict:
+                new_attr = t
+            else:
+                cdata = t( cdata )
+
+        if type( orig_attr ) is dict:
+            for k in orig_attr:
+                attr[k] = orig_attr[k]
+
+        for k in new_attr:
+            attr[k] = new_attr[k]
+
+        return [ cdata, attr ]

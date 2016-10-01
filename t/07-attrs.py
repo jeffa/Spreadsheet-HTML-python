@@ -1,7 +1,7 @@
 import unittest
 from Spreadsheet.HTML import Table
 
-class TestAliases(unittest.TestCase):
+class TestAttrs(unittest.TestCase):
 
     def test_table(self):
 
@@ -91,7 +91,6 @@ class TestAliases(unittest.TestCase):
 
 
     def test_th(self):
-        return
 
         data = [
             ['header1', 'header2', 'header3', 'header4'],
@@ -121,7 +120,6 @@ class TestAliases(unittest.TestCase):
 
 
     def test_th_rotate(self):
-        return
 
         data = [
             ['header1', 'header2', 'header3', 'header4'],
@@ -150,9 +148,7 @@ class TestAliases(unittest.TestCase):
         )
 
 
-if False: '''
     def test_th_lambda(self):
-        return
 
         data = [
             ['header1', 'header2', 'header3', 'header4'],
@@ -166,53 +162,22 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, 'th': lambda { |c| c.upcase } ).generate(),
+            Table( { 'data': data, 'th': lambda c: c.upper() } ).generate(),
             "via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, 'th': lambda { |c| c.upcase } ),
+            Table().generate( { 'data': data, 'th': lambda c: c.upper() } ),
             "via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { 'th': lambda { |c| c.upcase } ),
-            "via constructor and method"
-        )
-
-
-    def test_th_proc(self):
-        return
-
-        data = [
-            ['header1', 'header2', 'header3', 'header4'],
-            ['foo1', 'bar1', 'baz1', 'qux1'],
-            ['foo2', 'bar2', 'baz2', 'qux2'],
-            ['foo3', 'bar3', 'baz3', 'qux3'],
-            ['foo4', 'bar4', 'baz4', 'qux4']
-        ]
-
-        html = '<table><tr><th>HEADER1</th><th>HEADER2</th><th>HEADER3</th><th>HEADER4</th></tr><tr><td>foo1</td><td>bar1</td><td>baz1</td><td>qux1</td></tr><tr><td>foo2</td><td>bar2</td><td>baz2</td><td>qux2</td></tr><tr><td>foo3</td><td>bar3</td><td>baz3</td><td>qux3</td></tr><tr><td>foo4</td><td>bar4</td><td>baz4</td><td>qux4</td></tr></table>'
-
-        self.assertEqual(
-            html,
-            Table( { 'data': data, 'th': Proc.new { |c| c.upcase } ).generate(),
-            "via constructor only"
-        )
-        self.assertEqual(
-            html,
-            Table().generate( { 'data': data, 'th': Proc.new { |c| c.upcase } ),
-            "via method only"
-        )
-        self.assertEqual(
-            html,
-            Table( { 'data': data ).generate( { 'th': Proc.new { |c| c.upcase } ),
+            Table( { 'data': data } ).generate( { 'th': lambda c: c.upper() } ),
             "via constructor and method"
         )
 
 
     def test_th_attr_and_lambda(self):
-        return
 
         data = [
             ['header1', 'header2', 'header3', 'header4'],
@@ -226,23 +191,22 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, 'th': [ lambda { |c| c.upcase }, { 'style': { 'color': %w{ red green blue } } } ] ).generate(),
+            Table( { 'data': data, 'th': [ lambda c: c.upper(), { 'style': { 'color': ['red','green','blue'] } } ] } ).generate(),
             "via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, 'th': [ lambda { |c| c.upcase }, { 'style': { 'color': %w{ red green blue } } } ] ),
+            Table().generate( { 'data': data, 'th': [ lambda c: c.upper(), { 'style': { 'color': ['red','green','blue'] } } ] } ),
             "via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { 'th': [ lambda { |c| c.upcase }, { 'style': { 'color': %w{ red green blue } } } ] ),
+            Table( { 'data': data } ).generate( { 'th': [ lambda c: c.upper(), { 'style': { 'color': ['red','green','blue'] } } ] } ),
             "via constructor and method"
         )
 
 
     def test_td(self):
-        return
 
         data = [
             ['header1', 'header2', 'header3', 'header4'],
@@ -256,23 +220,22 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, 'td': { 'class': 'cell' } ).generate(),
+            Table( { 'data': data, 'td': { 'class': 'cell' } } ).generate(),
             "via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, 'td': { 'class': 'cell' } ),
+            Table().generate( { 'data': data, 'td': { 'class': 'cell' } } ),
             "via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { 'td': { 'class': 'cell' } ),
+            Table( { 'data': data } ).generate( { 'td': { 'class': 'cell' } } ),
             "via constructor and method"
         )
 
 
     def test_td_rotate(self):
-        return
 
         data = [
             ['header1', 'header2', 'header3', 'header4'],
@@ -286,23 +249,22 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, 'td': { 'style': { 'color': %w{ red green blue } } } ).generate(),
+            Table( { 'data': data, 'td': { 'style': { 'color': ['red','green','blue'] } } } ).generate(),
             "via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, 'td': { 'style': { 'color': %w{ red green blue } } } ),
+            Table().generate( { 'data': data, 'td': { 'style': { 'color': ['red','green','blue'] } } } ),
             "via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { 'td': { 'style': { 'color': %w{ red green blue } } } ),
+            Table( { 'data': data } ).generate( { 'td': { 'style': { 'color': ['red','green','blue'] } } } ),
             "via constructor and method"
         )
 
 
     def test_td_lambda(self):
-        return
 
         data = [
             ['header1', 'header2', 'header3', 'header4'],
@@ -316,23 +278,22 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, 'td': lambda { |c| c.upcase } ).generate(),
+            Table( { 'data': data, 'td': lambda c: c.upper() } ).generate(),
             "via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, 'td': lambda { |c| c.upcase } ),
+            Table().generate( { 'data': data, 'td': lambda c: c.upper() } ),
             "via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { 'td': lambda { |c| c.upcase } ),
+            Table( { 'data': data } ).generate( { 'td': lambda c: c.upper() } ),
             "via constructor and method"
         )
 
 
     def test_td_attr_and_lambda(self):
-        return
 
         data = [
             ['header1', 'header2', 'header3', 'header4'],
@@ -346,21 +307,22 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, 'td': [ lambda { |c| c.upcase }, { 'style': { 'color': %w{ red green blue } } } ] ).generate(),
+            Table( { 'data': data, 'td': [ lambda c: c.upper(), { 'style': { 'color': ['red','green','blue'] } } ] } ).generate(),
             "via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, 'td': [ lambda { |c| c.upcase }, { 'style': { 'color': %w{ red green blue } } } ] ),
+            Table().generate( { 'data': data, 'td': [ lambda c: c.upper(), { 'style': { 'color': ['red','green','blue'] } } ] } ),
             "via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { 'td': [ lambda { |c| c.upcase }, { 'style': { 'color': %w{ red green blue } } } ] ),
+            Table( { 'data': data } ).generate( { 'td': [ lambda c: c.upper(), { 'style': { 'color': ['red','green','blue'] } } ] } ),
             "via constructor and method"
         )
 
 
+if False: '''
     def test_headings(self):
         return
 
@@ -450,17 +412,17 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, '_c1': lambda { |c| c.upcase } ).generate(),
+            Table( { 'data': data, '_c1': lambda { |c| c.upper() } ).generate(),
             "_c1 attr via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, '_c1': lambda { |c| c.upcase } ),
+            Table().generate( { 'data': data, '_c1': lambda { |c| c.upper() } ),
             "_c1 attr via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { '_c1': lambda { |c| c.upcase } ),
+            Table( { 'data': data ).generate( { '_c1': lambda { |c| c.upper() } ),
             "_c1 attr via constructor and method"
         )
 
@@ -478,17 +440,17 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, '_c1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upcase } ] ).generate(),
+            Table( { 'data': data, '_c1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upper() } ] ).generate(),
             "_c1 attr via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, '_c1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upcase } ] ),
+            Table().generate( { 'data': data, '_c1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upper() } ] ),
             "_c1 attr via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { '_c1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upcase } ] ),
+            Table( { 'data': data ).generate( { '_c1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upper() } ] ),
             "_c1 attr via constructor and method"
         )
 
@@ -534,17 +496,17 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, '_r1': lambda { |c| c.upcase } ).generate(),
+            Table( { 'data': data, '_r1': lambda { |c| c.upper() } ).generate(),
             "_r1 attr via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, '_r1': lambda { |c| c.upcase } ),
+            Table().generate( { 'data': data, '_r1': lambda { |c| c.upper() } ),
             "_r1 attr via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { '_r1': lambda { |c| c.upcase } ),
+            Table( { 'data': data ).generate( { '_r1': lambda { |c| c.upper() } ),
             "_r1 attr via constructor and method"
         )
 
@@ -562,17 +524,17 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, '_r1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upcase } ] ).generate(),
+            Table( { 'data': data, '_r1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upper() } ] ).generate(),
             "_r1 attr via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, '_r1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upcase } ] ),
+            Table().generate( { 'data': data, '_r1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upper() } ] ),
             "_r1 attr via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { '_r1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upcase } ] ),
+            Table( { 'data': data ).generate( { '_r1': [ { 'style': { 'color': %w{ red green blue } } }, lambda { |c| c.upper() } ] ),
             "_r1 attr via constructor and method"
         )
 
@@ -618,17 +580,17 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, '_r1c2': lambda { |c| c.upcase } ).generate(),
+            Table( { 'data': data, '_r1c2': lambda { |c| c.upper() } ).generate(),
             "_r1c2 attr via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, '_r1c2': lambda { |c| c.upcase } ),
+            Table().generate( { 'data': data, '_r1c2': lambda { |c| c.upper() } ),
             "_r1c2 attr via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { '_r1c2': lambda { |c| c.upcase } ),
+            Table( { 'data': data ).generate( { '_r1c2': lambda { |c| c.upper() } ),
             "_r1c2 attr via constructor and method"
         )
 
@@ -646,17 +608,17 @@ if False: '''
 
         self.assertEqual(
             html,
-            Table( { 'data': data, '_r1c2': [ { 'class': 'foo' }, lambda { |c| c.upcase } ] ).generate(),
+            Table( { 'data': data, '_r1c2': [ { 'class': 'foo' }, lambda { |c| c.upper() } ] ).generate(),
             "_r1c2 attr via constructor only"
         )
         self.assertEqual(
             html,
-            Table().generate( { 'data': data, '_r1c2': [ { 'class': 'foo' }, lambda { |c| c.upcase } ] ),
+            Table().generate( { 'data': data, '_r1c2': [ { 'class': 'foo' }, lambda { |c| c.upper() } ] ),
             "_r1c2 attr via method only"
         )
         self.assertEqual(
             html,
-            Table( { 'data': data ).generate( { '_r1c2': [ { 'class': 'foo' }, lambda { |c| c.upcase } ] ),
+            Table( { 'data': data ).generate( { '_r1c2': [ { 'class': 'foo' }, lambda { |c| c.upper() } ] ),
             "_r1c2 attr via constructor and method"
         )
 
