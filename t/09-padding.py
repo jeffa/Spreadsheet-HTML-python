@@ -32,7 +32,6 @@ class TestPadding(unittest.TestCase):
         )
 
     def test_fill(self):
-        return
 
         data = [
             [ 'header1', 'header2' ],
@@ -56,7 +55,7 @@ class TestPadding(unittest.TestCase):
 
         self.assertEqual(
             '<table><tr><th>&nbsp;</th></tr></table>',
-            gen.generate( {'fill': nil } ),
+            gen.generate( {'fill': None } ),
             "fill defaults to 1x1 with with invalid data (nil)"
         )
 

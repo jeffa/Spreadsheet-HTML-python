@@ -107,8 +107,8 @@ class Table:
             params['-r0'] = params['headings']
 
         index = {}
-        if params['_max_cols']:
-            for i in range( params['_max_cols'] ):
+        if len( params['data'][0] ):
+            for i in range( len( params['data'][0] ) ):
                 key = params['data'][0][i] if params['data'][0][i] else ''
                 index[ '-{}'.format(key) ] = i
 
@@ -119,36 +119,38 @@ class Table:
         empty = params['empty'] if 'empty' in params else '&nbsp;'
         tag   = 'td' if params.get( 'matrix' ) or params.get( 'headless' ) else 'th'
 
-        if '_max_rows' in params:
-            for r in range( params['_max_rows'] ):
+        for r in range( params['_max_rows'] ):
 
-                if not '_layout' in params:
-                    if not params['data'][r]:
-                        params['data'][r] = []
-                    for i in range( params['_max_cols'] - len( params['data'][r] ) ):
-                        params['data'][r].append( '' )  # pad
-                    for i in range( len( params['data'][r] ) - params['_max_cols'] ):
-                        params['data'][r].pop()         # truncate
+            if not '_layout' in params:
+                try:
+                    params['data'][r]
+                except IndexError:
+                    params['data'].append( [] )
 
-                row = []
-                for c in range( params['_max_cols'] ):
-                    attr  = params[tag] if tag in params else {}
-                    cdata = str( params['data'][r][c] )
+                for i in range( params['_max_cols'] - len( params['data'][r] ) ):
+                    params['data'][r].append( '' )  # pad
+                for i in range( len( params['data'][r] ) - params['_max_cols'] ):
+                    params['data'][r].pop()         # truncate
 
-                    for dyna_param in [ tag, '-c{}'.format(c), '-r{}'.format(r), '-r{}c{}'.format(r,c) ]:
-                        if dyna_param in params:
-                            ( cdata, attr ) = self._extrapolate( cdata, attr, params[dyna_param] )
+            row = []
+            for c in range( params['_max_cols'] ):
+                attr  = params[tag] if tag in params else {}
+                cdata = str( params['data'][r][c] )
 
-                    # encoding here
+                for dyna_param in [ tag, '-c{}'.format(c), '-r{}'.format(r), '-r{}c{}'.format(r,c) ]:
+                    if dyna_param in params:
+                        ( cdata, attr ) = self._extrapolate( cdata, attr, params[dyna_param] )
 
-                    regex = re.compile(r"^\s*$")
-                    if regex.match( cdata ):
-                        cdata = empty
+                # encoding here
 
-                    row.append( { 'tag': tag, 'attr': attr, 'cdata': cdata } )
+                regex = re.compile(r"^\s*$")
+                if regex.match( cdata ):
+                    cdata = empty
 
-                params['data'][r] = row
-                tag = 'td'
+                row.append( { 'tag': tag, 'attr': attr, 'cdata': cdata } )
+
+            params['data'][r] = row
+            tag = 'td'
 
         if 'headless' in params:
             params['data'].pop(0)
@@ -176,9 +178,18 @@ class Table:
                 else:
                     params[thing] = things.pop(0)
 
-        params['data'] = list( data )
+        params['data'] = list( data ) if data else [ [ '' ] ]
+
         params['_max_rows'] = len( params['data'] )
         params['_max_cols'] = len( params['data'][0] )
+
+        if 'fill' in params and params['fill']:
+            (row,col,*junk) = re.split( r'\D', params['fill'] )
+            if row and int(row) > 0 and col and int(col) > 0:
+                if int(row) > params['_max_rows']:
+                    params['_max_rows'] = int(row)
+                if int(col) > params['_max_cols']:
+                    params['_max_cols'] = int(col)
 
         tag_params = {
             'level': params.get( 'level', 0 ),
