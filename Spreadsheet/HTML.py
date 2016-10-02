@@ -71,6 +71,10 @@ class Table:
         if 'caption' in params:
             cdata.append( self._tag( 'caption', params['caption'] ) )
 
+        if 'colgroup' in params or 'col' in params:
+            for c in self._colgroup( params):
+                cdata.append( c )
+
         if 'tgroups' in params and params['tgroups'] > 0:
             body = list( params['data'] )
             matrix = params.get( 'matrix', 0 )
@@ -200,6 +204,38 @@ class Table:
         params['auto'] = Tag( tag_params )
 
         return params
+
+    def _colgroup( self, params ):
+        colgroup = []
+        if 'col' in params and type( params['col'] ) is dict:
+            params['col'] = [ params['col'] ]
+
+        if 'col' in params and type( params['col'] ) is list:
+            if type( params['colgroup'] ) is list:
+                colgroup = [ list( map( lambda cg: {
+                    'tag': 'colgroup',
+                    'attr': cg,
+                    'cdata': list( map( lambda a: { 'tag': 'col', 'attr': a }, params['col'] ) )
+                }, params['colgroup'] ) ) ]
+            else:
+                attr = params['colgroup'] if params['colgroup'] else {}
+                colgroup = {
+                    'tag':   'colgroup',
+                    'attr':  attr,
+                    'cdata': list( map( lambda a: { 'tag': 'col', 'attr': a }, params['col'] ) )
+                }
+
+        else:
+            if type( params['colgroup'] ) is dict:
+                params['colgroup'] = [ params['colgroup'] ]
+
+            if type( params['colgroup'] ) is list:
+                colgroup = list( map( lambda a: { 'tag': 'colgroup', 'attr': a }, params['colgroup'] ) )
+
+        if type( colgroup ) is dict:
+            colgroup = [ colgroup ]
+
+        return colgroup
 
     def _tag( self, tag, cdata ):
         tag = { 'tag': tag, 'cdata': cdata }
