@@ -20,27 +20,27 @@ Generate HTML tables with ease (HTML4, HTML5, XHTML).
 
     data = [ [1,2,3], [10,11,12], ['<foo>','<bar>','<baz>'] ]
 
-    puts Table().generate( data )
+    print( Table().generate( data ) )
 
-    puts Table().generate( { 'data': data } )
+    print( Table().generate( { 'data': data } ) )
 
 Supports multiple orientations.
 
-    generator = Table( { 'data': data, 'indent': "\t" } )
+    generator = Table( { 'data': data, 'indent': "\t" } ) )
 
-    puts generator.portrait( { 'encodes': 1 } )
+    print( generator.portrait( { 'encodes': 1 } ) )
 
-    puts generator.landscape( { 'encode': 1 } )
+    print( generator.landscape( { 'encode': 1 } ) )
 
 Handles grouping.
 
-    puts generator.generate( { 'tgroups': 1 } )
+    print( generator.generate( { 'tgroups': 1 } ) )
 
-    puts generator.generate( { 'tgroups': 2, 'indent': None } )
+    print( generator.generate( { 'tgroups': 2, 'indent': None } ) )
 
 Supports rotating attributes.
 
-    puts generator.generate( { 'tr': { 'class': [ 'odd', 'even' ] } )
+    print( generator.generate( { 'tr': { 'class': [ 'odd', 'even' ] } ) )
 
 development
 ===========
