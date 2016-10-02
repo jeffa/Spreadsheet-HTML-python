@@ -122,6 +122,14 @@ class Table:
         if '_max_rows' in params:
             for r in range( params['_max_rows'] ):
 
+                if not '_layout' in params:
+                    if not params['data'][r]:
+                        params['data'][r] = []
+                    for i in range( params['_max_cols'] - len( params['data'][r] ) ):
+                        params['data'][r].append( '' )  # pad
+                    for i in range( len( params['data'][r] ) - params['_max_cols'] ):
+                        params['data'][r].pop()         # truncate
+
                 row = []
                 for c in range( params['_max_cols'] ):
                     attr  = params[tag] if tag in params else {}
@@ -132,6 +140,7 @@ class Table:
                             ( cdata, attr ) = self._extrapolate( cdata, attr, params[dyna_param] )
 
                     # encoding here
+
                     regex = re.compile(r"^\s*$")
                     if regex.match( cdata ):
                         cdata = empty
