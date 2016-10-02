@@ -103,6 +103,19 @@ class Table:
     def _process( self, *args ):
         params = self._args( *args )
 
+        if 'headings' in params:
+            params['-r0'] = params['headings']
+
+        index = {}
+        if params['_max_cols']:
+            for i in range( params['_max_cols'] ):
+                key = params['data'][0][i] if params['data'][0][i] else ''
+                index[ '-{}'.format(key) ] = i
+
+            for key in list( params.keys() ):
+                if key in index:
+                    params[ '-c{}'.format(index[key]) ] = params[key]
+
         empty = params['empty'] if 'empty' in params else '&nbsp;'
         tag   = 'td' if params.get( 'matrix' ) or params.get( 'headless' ) else 'th'
 
@@ -114,7 +127,7 @@ class Table:
                     attr  = params[tag] if tag in params else {}
                     cdata = str( params['data'][r][c] )
 
-                    for dyna_param in [ tag, '-c{}'.format(c), '-r{}'.format(r), '-rc{}{}'.format(r,c) ]:
+                    for dyna_param in [ tag, '-c{}'.format(c), '-r{}'.format(r), '-r{}c{}'.format(r,c) ]:
                         if dyna_param in params:
                             ( cdata, attr ) = self._extrapolate( cdata, attr, params[dyna_param] )
 
