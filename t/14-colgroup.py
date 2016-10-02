@@ -89,11 +89,11 @@ class TestColGroup(unittest.TestCase):
             "no cols against multiple colgroups"
         )
 
-#        self.assertEqual(
-#            '<table><colgroup><col /><col /><col /></colgroup><colgroup><col /><col /><col /></colgroup><colgroup><col /><col /><col /></colgroup><tr><th>a</th><th>b</th><th>c</th></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>4</td><td>5</td><td>6</td></tr></table>',
-#            gen.generate( { 'colgroup': [{},{},{}] } ),
-#            "multiple cols against multiple colgroups"
-#        )
+        self.assertEqual(
+            '<table><colgroup><col /><col /><col /></colgroup><colgroup><col /><col /><col /></colgroup><colgroup><col /><col /><col /></colgroup><tr><th>a</th><th>b</th><th>c</th></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>4</td><td>5</td><td>6</td></tr></table>',
+            gen.generate( { 'colgroup': [{},{},{}] } ),
+            "multiple cols against multiple colgroups"
+        )
 
 
 if __name__ == '__main__':

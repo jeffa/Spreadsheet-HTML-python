@@ -212,11 +212,11 @@ class Table:
 
         if 'col' in params and type( params['col'] ) is list:
             if type( params['colgroup'] ) is list:
-                colgroup = [ list( map( lambda cg: {
+                colgroup = list( map( lambda cg: {
                     'tag': 'colgroup',
                     'attr': cg,
                     'cdata': list( map( lambda a: { 'tag': 'col', 'attr': a }, params['col'] ) )
-                }, params['colgroup'] ) ) ]
+                }, params['colgroup'] ) )
             else:
                 attr = params['colgroup'] if params['colgroup'] else {}
                 colgroup = {
