@@ -1,6 +1,7 @@
 Revision history for Spreadsheet-HTML-python
 
 0.0.2
+    - added encoding
 
 0.0.1
     - First version, released on an unsuspecting world.

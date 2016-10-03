@@ -1,5 +1,5 @@
 import re
-from HTML.Auto import Tag
+from HTML.Auto import Tag,Encoder
 
 __version__='0.0.2'
 
@@ -123,6 +123,7 @@ class Table:
         empty = params['empty'] if 'empty' in params else '&nbsp;'
         tag   = 'td' if params.get( 'matrix' ) or params.get( 'headless' ) else 'th'
 
+        encoder = Encoder()
         for r in range( params['_max_rows'] ):
 
             if not '_layout' in params:
@@ -145,7 +146,9 @@ class Table:
                     if dyna_param in params:
                         ( cdata, attr ) = self._extrapolate( cdata, attr, params[dyna_param] )
 
-                # encoding here
+                encodes = params.get( 'encodes', '' )
+                if encodes or 'encode' in params:
+                    cdata = encoder.encode( cdata, encodes )
 
                 regex = re.compile(r"^\s*$")
                 if regex.match( cdata ):
