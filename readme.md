@@ -15,14 +15,14 @@ data = [ [1,2,3], [10,11,12], ['<foo>','<bar>','<baz>'] ]
 print( Table().generate( data ) )
 print( Table().generate( { 'data': data } ) )
 
-generator = Table( { 'data': data, 'indent': "\t" } ) )
+generator = Table( { 'data': data, 'indent': "\t" } )
 print( generator.portrait( { 'encodes': 1 } ) )
 print( generator.landscape( { 'encode': 1 } ) )
 
 print( generator.generate( { 'tgroups': 1 } ) )
-print( generator.generate( { 'tgroups': 2, 'indent': None } ) )
+print( generator.generate( { 'tgroups': 2 } ) )
 
-print( generator.generate( { 'tr': { 'class': [ 'odd', 'even' ] } ) )
+print( generator.generate( { 'tr': { 'class': [ 'odd', 'even' ] } } ) )
 
 # and much, much more ...
 ```

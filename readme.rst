@@ -26,7 +26,7 @@ Generate HTML tables with ease (HTML4, HTML5, XHTML).
 
 Supports multiple orientations.
 
-    generator = Table( { 'data': data, 'indent': "\t" } ) )
+    generator = Table( { 'data': data, 'indent': "\t" } )
 
     print( generator.portrait( { 'encodes': 1 } ) )
 
@@ -36,11 +36,11 @@ Handles grouping.
 
     print( generator.generate( { 'tgroups': 1 } ) )
 
-    print( generator.generate( { 'tgroups': 2, 'indent': None } ) )
+    print( generator.generate( { 'tgroups': 2 } ) )
 
 Supports rotating attributes.
 
-    print( generator.generate( { 'tr': { 'class': [ 'odd', 'even' ] } ) )
+    print( generator.generate( { 'tr': { 'class': [ 'odd', 'even' ] } } ) )
 
 development
 ===========
