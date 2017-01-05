@@ -1,7 +1,7 @@
 import re
 from HTML.Auto import Tag,Encoder
 
-__version__='0.0.3'
+__version__='0.0.4'
 
 class Table:
 
