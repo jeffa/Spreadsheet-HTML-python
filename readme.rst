@@ -9,6 +9,7 @@ Installing
 
 Use pip:
 
+    $ pip install HTML-Auto
     $ pip install Spreadsheet-HTML
 
 Using Spreadsheet-HTML
@@ -26,7 +27,7 @@ Generate HTML tables with ease (HTML4, HTML5, XHTML).
 
 Supports multiple orientations.
 
-    generator = Table( { 'data': data, 'indent': "\t" } )
+    generator = Table( { 'data': data, 'indent': "\\t" } )
 
     print( generator.portrait( { 'encodes': 1 } ) )
 
