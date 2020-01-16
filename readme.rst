@@ -9,13 +9,12 @@ Installing
 
 Use pip:
 
-    $ pip install HTML-Auto
-    $ pip install Spreadsheet-HTML
+    $ pip install HTML-Auto Spreadsheet-HTML
 
 Using Spreadsheet-HTML
 ======================
 
-Generate HTML tables with ease (HTML4, HTML5, XHTML).
+# Object oriented or procedural interface.
 
     from Spreadsheet.HTML import Table
 
@@ -23,29 +22,37 @@ Generate HTML tables with ease (HTML4, HTML5, XHTML).
 
     print( Table().generate( data ) )
 
-    print( Table().generate( { 'data': data } ) )
+    print( Table().generate( { 'data': data, 'indent' : "\\t" } ) )
 
-Supports multiple orientations.
+    table = Table( { 'data': data, 'indent': "\\t" } )
 
-    generator = Table( { 'data': data, 'indent': "\\t" } )
+    print( table.generate() )
 
-    print( generator.portrait( { 'encodes': 1 } ) )
+# Encodes default entities or any specified character.
 
-    print( generator.landscape( { 'encode': 1 } ) )
+    print( table.generate( { 'encodes': 1 } ) )
 
-Handles grouping.
+    print( table.generate( { 'encode': 1 } ) )
 
-    print( generator.generate( { 'tgroups': 1 } ) )
+# Supports multiple orientations.
 
-    print( generator.generate( { 'tgroups': 2 } ) )
+    print( table.portrait() )
 
-Supports rotating attributes.
+    print( table.landscape() )
 
-    print( generator.generate( { 'tr': { 'class': [ 'odd', 'even' ] } } ) )
+# Handles grouping.
+
+    print( table.generate( { 'tgroups': 1 } ) )
+
+    print( table.generate( { 'tgroups': 2 } ) )
+
+# Supports rotating attributes.
+
+    print( table.generate( { 'tr': { 'class': [ 'odd', 'even' ] } } ) )
 
 development
 ===========
 
 * Source hosted at `GitHub <http://github.com/jeffa/Spreadsheet-HTML-python>`_
 
-Pull requests welcomed. Make sure your patches are well tested.
+Well tested pull requests welcome. :)

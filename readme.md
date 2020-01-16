@@ -31,8 +31,7 @@ See [readme](readme.rst) for more documentation.
 Installation
 ------------
 ```
-pip install HTML-Auto
-pip install Spreadsheet-HTML
+pip install HTML-Auto Spreadsheet-HTML
 ```
 
 License and Copyright
