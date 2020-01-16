@@ -180,7 +180,7 @@ class Table:
                 data = thing['data'] if 'data' in thing else data
                 params.update( thing )
             else:
-                if thing is 'data':
+                if thing == 'data':
                     data = things.pop(0)
                 else:
                     params[thing] = things.pop(0)
