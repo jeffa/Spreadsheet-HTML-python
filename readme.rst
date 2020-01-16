@@ -50,8 +50,24 @@ Using Spreadsheet-HTML
 
     print( table.generate( { 'tr': { 'class': [ 'odd', 'even' ] } } ) )
 
-development
+Development
 ===========
+
+Spreadsheet-HTML is far from complete. What is the point of writing all this code to
+merely generate some tables if it cannot provide some USEFUL presets that are consistent
+yet FLEXIBLE? The following still needs to be implemented:
+
+* Parameters
+   * file - read and convert from XLS, CSV, JSON, YAML, HTML, GIF, PNG and JPG
+   * wrap - turn one dimension arrays into tables
+   * headings - apply callback to each cell in headings row
+
+* Methods
+   * calendar - generate calenders
+   * tic-tac-toe - easy game to implemenent with JavaScript
+   * chess - a bit more adventurous but doable
+   * sudoku - another doable game
+   * conway - game of life 
 
 * Source hosted at `GitHub <http://github.com/jeffa/Spreadsheet-HTML-python>`_
 
