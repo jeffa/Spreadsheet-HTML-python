@@ -30,6 +30,7 @@ print( generator.generate( { 'tr': { 'class': [ 'odd', 'even' ] } } ) )
 Installation
 ------------
 ```
+pip install HTML-Auto
 pip install Spreadsheet-HTML
 ```
 
