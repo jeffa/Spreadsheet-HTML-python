@@ -26,6 +26,7 @@ print( generator.generate( { 'tr': { 'class': [ 'odd', 'even' ] } } ) )
 
 # and much, much more ...
 ```
+See [readme](readme.rst) for more documentation.
 
 Installation
 ------------
