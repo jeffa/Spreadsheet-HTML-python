@@ -20,10 +20,5 @@ setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: Artistic License",
     ],
-    long_description="""\
-    Just another HTML table generator.
-    --------------------------------
-
-    Generate HTML tables with ease (HTML4, XHTML and HTML5).
-"""
+    long_description="Generate HTML tables with ease (HTML4, XHTML and HTML5)."
 )
