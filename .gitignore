@@ -1,4 +1,6 @@
 Spreadsheet_HTML.egg-info/
 dist/
+Spreadsheet/__pycache__/
 Spreadsheet_HTML/__pycache__/
 build/
+HTML/
